@@ -1,6 +1,6 @@
 require 'capybara'
 require 'capybara/dsl'
-require 'capybara/poltergeist'
+require 'capybara-webkit'
 require 'csv'
 
 
@@ -8,8 +8,11 @@ class SalaryScraper
   include Capybara::DSL
 
   def initialize url
-    Capybara.default_driver = :poltergeist
-    Capybara.javascript_driver = :poltergeist
+    Capybara.default_driver = :webkit
+    Capybara.javascript_driver = :webkit
+    Capybara::Webkit.configure do |config|
+      config.allow_url("cognoswww.miamidade.gov")
+    end
     @data = []
     @url = url
   end
